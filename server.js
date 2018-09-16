@@ -29,6 +29,10 @@ app.set("view engine", "handlebars");
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);  
 
+app.get("/", function(req, res) {
+    res.render("index");
+})
+
 app.get("/scrape", function(req, res) {
 
     request("https://www.npr.org/sections/news/", function(error, response, html) {
