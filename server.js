@@ -69,6 +69,15 @@ app.get("/articles", function(req, res) {
     })
 })
 
+app.get("/articles/:id", function(req, res) {
+    db.Article.findOne({_id: req.params.id})
+    .then(function(dbArticle) {
+        res.json(dbArticle)
+    }).catch(function(err) {
+        res.json(err);
+    })
+})
+
 app.post("/articles/:id", function(req, res) {
     db.Comment.create(req.body)
     .then(function(dbComment) {
