@@ -22,6 +22,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
+app.engine("handlebars", exphbs({defaultLayout: "main"}));
+app.set("view engine", "handlebars");
+
 
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);  
