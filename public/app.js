@@ -10,7 +10,7 @@ $.ajax({
 
 
 $(document).on("click", "span", function() {
-    $("#notes").empty();
+    $("#comments").empty();
 
     var articleId = $(this).attr("data-id");
     console.log(articleId)
@@ -22,12 +22,30 @@ $(document).on("click", "span", function() {
     .then(function(data) {
         console.log(data);
 
-        $("#notes").append(`<h2>${data.title}</h2>`);
-        $("#notes").append(`<textarea id="bodyInput" name="body"></textarea>`);
-        $("#notes").append(`<button data-id="${data._id}" id="savenote">Save your note!</button>`);
+        $("#comments").append(`<h2>${data.title}</h2>`);
+        $("#comments").append(`<textarea id="bodyInput" name="body" style="width: 300px; height: 200px; margin: 10px"></textarea>`);
+        $("#comments").append(`<button data-id="${data._id}" id="savecomment">Save your comment!</button>`);
 
-        if (data.note) {
-            $("#bodyInput").val(data.note.body);
+        if (data.comment) {
+            $("#bodyInput").val(data.comment.body);
         }
     });
+})
+
+$(document).on("click", "#savecomment", function() {
+
+    var articleId = $(this).attr("data-id");
+    
+    $.ajax({
+        method: "POST",
+        url: `/articles/${articleId}`,
+        data: {
+            body: $("#bodyInput").val()
+        }
+    }).then(function(data){
+        console.log(data);
+        $("#comments").empty();
+    })
+
+    $("#bodyInput").val("");
 })
